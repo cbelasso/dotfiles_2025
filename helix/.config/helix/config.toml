@@ -4,8 +4,12 @@ theme = "tokyonight_storm"
 line-number = "relative"
 mouse = true
 cursorline = true
-scrolloff = 0
+scrolloff = 10
 clipboard-provider= "pasteboard"
+bufferline = "always"
+preview-completion-insert = false
+auto-info = true
+gutters = ["diff", "diagnostics", "line-numbers", "spacer"]
 
 [editor.cursor-shape]
 insert = "bar"
@@ -16,11 +20,19 @@ select = "underline"
 q = ":quit!"
 y = ":clipboard-yank"
 p = ":clipboard-paste-after"
+" "." " = "file_picker_in_current_directory"
+esc = ["collapse_selection", "keep_primary_selection"]
+tab = ":buffer-next"
+S-tab = ":buffer-previous"
+"{" = "goto_prev_paragraph"
+"}" = "goto_next_paragraph"
 
 [keys.insert]
 j.k = "normal_mode"
 k.j = "normal_mode"
 
-
+[keys.select]
+y = ":clipboard-yank"
+p = ":clipboard-paste-after"
 
 
