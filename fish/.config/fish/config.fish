@@ -20,7 +20,9 @@ abbr -ag ga git add
 abbr -ag gaa git add --all
 abbr -ag gb git branch
 abbr -ag gc git commit
+abbr -ag gcm git commit -m
 abbr -ag gpsup git push -u origin \(git branch --show-current\)
+abbr -ag gp git push
 abbr -ag gst git status
 
 # ~/.config/fish/config.fish
