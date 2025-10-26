@@ -25,5 +25,16 @@ abbr -ag gpsup git push -u origin \(git branch --show-current\)
 abbr -ag gp git push
 abbr -ag gst git status
 
+function fish_edit_command
+    set cmd (commandline -cp) # copy the current command line
+    set tmp (mktemp) # create a temporary file
+    echo $cmd >$tmp
+    hx $tmp # open in Helix
+    commandline (string trim (cat $tmp)) # replace the command with edited contents
+    rm $tmp
+end
+
+bind \cv fish_edit_command
+
 # ~/.config/fish/config.fish
 starship init fish | source
