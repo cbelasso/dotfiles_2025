@@ -1,0 +1,43 @@
+sudo yabai --load-sa
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+
+yabai -m config split_ratio 0.5
+
+# Make default space layout to bsp
+yabai -m config layout stack
+yabai -m config auto_balance on
+yabai -m config window_placement second_child
+yabai -m signal --add event=window_focused action='yabai -m window $YABAI_WINDOW_ID --insert stack'
+yabai -m signal --add event=application_front_switched action='yabai -m window --insert stack'
+yabai -m signal --add event=application_terminated action='yabai -m window --insert stack'
+yabai -m signal --add event=window_destroyed action='yabai -m window --insert stack'
+yabai -m config insert_feedback_color 0x00FFFFFF
+
+
+# Padding
+yabai -m config top_padding                  3
+yabai -m config bottom_padding               3
+yabai -m config left_padding                 3
+yabai -m config right_padding                3
+yabai -m config window_gap                   5
+
+
+yabai -m config window_border                on
+yabai -m config window_border_hidpi          on
+yabai -m config window_border_width          2
+yabai -m config active_window_border_color   0xffD8DEE9
+yabai -m config normal_window_border_color   0xff434C5E
+
+# Mouse Settings 
+# yabai -m config focus_follows_mouse autoraise 
+# yabai -m config mouse_follows_focus on 
+
+yabai -m rule --add app="^System Settings$" manage=off
+yabai -m rule --add app="^FortiClient$" manage=off
+yabai -m rule --add app="^Finder$" manage=off
+yabai -m rule --add app="^Spotify$" manage=off
+yabai -m rule --add app="^Karabiner-Elements$" manage=off
+
+
+borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0 &
+

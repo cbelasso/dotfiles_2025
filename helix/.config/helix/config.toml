@@ -1,0 +1,26 @@
+theme = "tokyonight_storm"
+
+[editor]
+line-number = "relative"
+mouse = true
+cursorline = true
+scrolloff = 0
+clipboard-provider= "pasteboard"
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[keys.normal]
+q = ":quit!"
+y = ":clipboard-yank"
+p = ":clipboard-paste-after"
+
+[keys.insert]
+j.k = "normal_mode"
+k.j = "normal_mode"
+
+
+
+

@@ -1,0 +1,82 @@
+# hyper (cmd + shift + alt + ctrl)
+# meh (shift + alt + ctrl)
+
+# Focus window
+# lalt - h : yabai -m window --focus west
+# lalt - l : yabai -m window --focus east
+lalt - k : yabai -m window --focus north
+lalt - j : yabai -m window --focus south
+
+lalt - w: yabai -m space --toggle show-desktop
+lalt - v: yabai -m space  --focus next || yabai -m space --focus first
+lalt - c: yabai -m space  --focus prev || yabai -m space --focus last
+
+lalt - h : yabai -m window --focus stack.prev || yabai -m window --focus west
+lalt - l: yabai -m window --focus stack.next || yabai -m window --focus east
+
+# maximize a window
+# lalt - m : yabai -m window --toggle zoom-fullscreen
+
+# balance out tree of windows (resize to occupy same area)
+lalt - e : yabai -m space --balance
+
+
+lalt- n : yabai -m space --layout bsp 
+lalt- m : yabai -m space --layout stack
+
+# Resize windows
+meh - k : \
+    yabai -m window --resize top:0:-20 ; \
+    yabai -m window --resize bottom:0:-20
+
+meh - h : \
+    yabai -m window --resize left:-20:0 ; \
+    yabai -m window --resize right:-20:0
+
+meh - j : \
+    yabai -m window --resize bottom:0:20 ; \
+    yabai -m window --resize top:0:20
+
+meh - l : \
+    yabai -m window --resize right:20:0 ; \
+    yabai -m window --resize left:20:0
+
+#change focus between external displays (left and right)
+lalt - s: yabai -m display --focus west
+lalt - d: yabai -m display --focus east
+
+# move window to display left and right
+lalt - a : yabai -m window --display west; yabai -m display --focus west;
+lalt - f : yabai -m window --display east; yabai -m display --focus east;
+
+# rotate layout clockwise
+lalt - r : yabai -m space --rotate 270
+
+# Swap window
+shift + lalt - h : yabai -m window --swap west
+shift + lalt - j : yabai -m window --swap south
+shift + lalt - k : yabai -m window --swap north
+shift + lalt - l : yabai -m window --swap east
+
+# move window and split
+ctrl + lalt - j : yabai -m window --warp south
+ctrl + lalt - k : yabai -m window --warp north
+ctrl + lalt - h : yabai -m window --warp west
+ctrl + lalt - l : yabai -m window --warp east
+
+
+
+
+#move window to prev and next space
+shift + alt - p : yabai -m window --space prev;
+shift + alt - n : yabai -m window --space next;
+
+# move window to space #
+shift + alt - 1 : yabai -m window --space 1;
+shift + alt - 2 : yabai -m window --space 2;
+shift + alt - 3 : yabai -m window --space 3;
+shift + alt - 4 : yabai -m window --space 4;
+shift + alt - 5 : yabai -m window --space 5;
+shift + alt - 6 : yabai -m window --space 6;
+shift + alt - 7 : yabai -m window --space 7;
+
