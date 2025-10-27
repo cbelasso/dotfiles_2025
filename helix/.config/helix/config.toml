@@ -26,6 +26,7 @@ tab = ":buffer-next"
 S-tab = ":buffer-previous"
 "{" = "goto_prev_paragraph"
 "}" = "goto_next_paragraph"
+" ".l.g = [":new", ":insert-output lazygit", ":buffer-close!", ":redraw"]
 
 [keys.insert]
 j.k = "normal_mode"
