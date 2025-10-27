@@ -57,6 +57,7 @@ set -g theme_hostname always
 # -------------------------------
 alias ls "eza --icons --grid --header"
 alias ll "eza --icons --long --header"
+alias lg lazygit
 
 # -------------------------------
 # Git abbreviations
