@@ -5,7 +5,7 @@ line-number = "relative"
 mouse = true
 cursorline = true
 scrolloff = 10
-clipboard-provider= "pasteboard"
+# clipboard-provider= "pasteboard"
 bufferline = "always"
 preview-completion-insert = false
 auto-info = true
@@ -34,5 +34,4 @@ k.j = "normal_mode"
 [keys.select]
 y = ":clipboard-yank"
 p = ":clipboard-paste-after"
-
 
