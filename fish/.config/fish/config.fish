@@ -29,6 +29,15 @@ else if test $os = Linux
 end
 
 # -------------------------------
+# Miniconda
+# -------------------------------
+set MINICONDA_DIR $HOME/miniconda3
+if test -d $MINICONDA_DIR
+    set -gx PATH $MINICONDA_DIR/bin $PATH
+    status --is-interactive; and source $MINICONDA_DIR/etc/fish/conf.d/conda.fish
+end
+
+# -------------------------------
 # Editor
 # -------------------------------
 set -gx EDITOR hx
@@ -57,7 +66,9 @@ set -g theme_hostname always
 # -------------------------------
 alias ls "eza --icons --grid --header"
 alias ll "eza --icons --long --header"
+alias lt='eza --tree --level=2 --long --icons --git --header --group --color=always'
 alias lg lazygit
+alias ipython ipython3
 
 # -------------------------------
 # Git abbreviations
@@ -84,3 +95,39 @@ function fish_edit_command
 end
 
 bind \cv fish_edit_command
+
+
+# ======================================================================
+# Gpustat shortcut 
+# ======================================================================
+
+function gpustat
+    set VENV_DIR "$HOME/workspace/gpu/.venv"
+    set PYTHON "$VENV_DIR/bin/python"
+    set GPUSTAT "$VENV_DIR/bin/gpustat"
+
+    if not test -x $GPUSTAT
+        echo "gpustat not found in $VENV_DIR"
+        return 1
+    end
+
+    watch -n0.1 $PYTHON -m gpustat -a -p
+end
+
+
+# ======================================================================
+# VSCode launcher fix for tmux socket issue
+# ======================================================================
+
+function code
+    # If in tmux and socket is broken, try to fix it
+    if set -q TMUX; and set -q VSCODE_IPC_HOOK_CLI; and not test -S "$VSCODE_IPC_HOOK_CLI"
+        set NEW_SOCKET (find /run/user/(id -u) -name "vscode-ipc-*.sock" -type s 2>/dev/null | head -1)
+        if test -n "$NEW_SOCKET"
+            tmux set-environment VSCODE_IPC_HOOK_CLI "$NEW_SOCKET"
+            set -gx VSCODE_IPC_HOOK_CLI "$NEW_SOCKET"
+        end
+    end
+
+    command code $argv
+end
