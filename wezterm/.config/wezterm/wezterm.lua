@@ -35,6 +35,17 @@ return {
 		-- map super+i send_text all \x1b[105;5u #\x1b[105;6u
 		--
 		{
+		  key = "j",
+		  mods = "CMD",
+		  action = wezterm.action.SendKey({ key = "j", mods = "ALT" }),
+		},
+		{
+		  key = "k",
+		  mods = "CMD",
+		  action = wezterm.action.SendKey({ key = "k", mods = "ALT" }),
+		},
+
+		{
 			key = "i",
 			mods = "CMD",
 			action = wezterm.action.SendKey({ key = "i", mods = "ALT" }),
