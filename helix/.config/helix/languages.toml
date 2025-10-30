@@ -5,16 +5,30 @@
 [language-server.ruff]
 command = "ruff"
 args = ["server"]
+config = { settings = { organizeImports = true, fixAll = true} }
 
 [language-server.pyright]
 command = "pyright-langserver"
 args = ["--stdio"]
 
+
+# [[language]]
+# name = "python"
+# language-servers = ["pyright", "ruff"]
+# formatter = { command = "ruff", args = ["format", "-"] }
+# auto-format = true
+# auto-pairs = { '(' = ')', '{' = '}', '[' = ']', '"' = '"', "'" = "'" }
+# text-width = 88
+# rulers = [88]
+
 [[language]]
 name = "python"
 language-servers = ["pyright", "ruff"]
-formatter = { command = "ruff", args = ["format", "-"] }
+formatter = { command = "sh", args = ["-c", "ruff check --fix --stdin-filename placeholder.py - | ruff format -"] }
 auto-format = true
+auto-pairs = { '(' = ')', '{' = '}', '[' = ']', '"' = '"', "'" = "'" }
+text-width = 88
+rulers = [88]
 
 # ======================================
 # 📝 Markdown

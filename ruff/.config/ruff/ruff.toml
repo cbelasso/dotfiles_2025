@@ -1,0 +1,18 @@
+# ~/.config/ruff/ruff.toml
+line-length = 88
+target-version = "py312"
+
+[lint]
+select = ["E", "F", "I"]
+
+[lint.isort]
+# Import order rules
+known-first-party = ["my_project"]
+known-third-party = ["requests", "numpy"]
+force-sort-within-sections = true
+combine-as-imports = true
+
+[format]
+# Ensure formatter uses the same line length
+quote-style = "double"
+indent-style = "space"
