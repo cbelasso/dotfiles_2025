@@ -82,7 +82,7 @@ set -gx PATH $HOME/.local/bin $PATH
 function python
     python3 $argv
 end
-funcsave python
+# funcsave python
 
 # Function to switch Homebrew Python versions
 function switch_python
@@ -105,7 +105,7 @@ function switch_python
         echo "Python version $pyver not found via Homebrew"
     end
 end
-funcsave switch_python
+# funcsave switch_python
 
 # Optional auto-completion for switch_python
 function __switch_python_complete
