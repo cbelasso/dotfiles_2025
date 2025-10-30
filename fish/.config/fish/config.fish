@@ -21,6 +21,20 @@ if test $os = Darwin
     set -gx HELIX_CLIPBOARD_PROVIDER pasteboard
     set -gx BREW_PREFIX /opt/homebrew
     fish_add_path $BREW_PREFIX/bin
+
+    # -------------------------------
+    # Default Homebrew Python version
+    # -------------------------------
+    set -gx DEFAULT_PYTHON 3.12
+
+    set python_prefix "/opt/homebrew/opt/python@$DEFAULT_PYTHON/bin"
+
+    # Ensure Homebrew bin and local bin come first
+    set -gx PATH $python_prefix $HOME/.local/bin /opt/homebrew/bin $PATH
+
+    # Symlink python and python3 to the default version
+    ln -sf $python_prefix/python3 $HOME/.local/bin/python
+    ln -sf $python_prefix/python3 $HOME/.local/bin/python3
 else if test $os = Linux
     # Linux server settings
     set -gx HELIX_RUNTIME $HOME/.config/helix/runtime
@@ -29,6 +43,7 @@ else if test $os = Linux
     # Ensure miniconda bin is in PATH for Helix
     # fish_add_path $HOME/miniconda3/bin
 end
+
 # -------------------------------
 # Miniconda
 # -------------------------------
@@ -67,7 +82,7 @@ set -g theme_hostname always
 # -------------------------------
 alias ls "eza --icons --grid --header"
 alias ll "eza --icons --long --header"
-alias lt='eza --tree --level=2 --long --icons --git --header --group --color=always'
+alias lt 'eza --tree --level=2 --long --icons --git --header --group --color=always'
 alias lg lazygit
 alias ipython ipython3
 
@@ -82,7 +97,6 @@ set -gx PATH $HOME/.local/bin $PATH
 function python
     python3 $argv
 end
-# funcsave python
 
 # Function to switch Homebrew Python versions
 function switch_python
@@ -91,21 +105,21 @@ function switch_python
         return 1
     end
 
-    set pyver $argv[1] # <-- rename from 'version' to 'pyver'
+    set pyver $argv[1]
     set prefix "/opt/homebrew/opt/python@$pyver/bin"
 
     if test -d $prefix
         # Add version to PATH at the front
         set -gx PATH $prefix $PATH
 
-        # Update symlink so `which python` works
+        # Update symlink so `python` and `python3` point to chosen version
         ln -sf $prefix/python3 $HOME/.local/bin/python
+        ln -sf $prefix/python3 $HOME/.local/bin/python3
         echo "Switched python to $pyver"
     else
         echo "Python version $pyver not found via Homebrew"
     end
 end
-# funcsave switch_python
 
 # Optional auto-completion for switch_python
 function __switch_python_complete
@@ -115,8 +129,6 @@ function __switch_python_complete
     end
 end
 complete -c switch_python -a "(__switch_python_complete)"
-
-ln -sf (which python3) $HOME/.local/bin/python
 
 # -------------------------------
 # Git abbreviations
