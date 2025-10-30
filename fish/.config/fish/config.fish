@@ -71,6 +71,53 @@ alias lg lazygit
 alias ipython ipython3
 
 # -------------------------------
+# Python shortcut & version switching
+# -------------------------------
+# Ensure local bin exists
+mkdir -p $HOME/.local/bin
+set -gx PATH $HOME/.local/bin $PATH
+
+# Make `python` behave like `python3`
+function python
+    python3 $argv
+end
+funcsave python
+
+# Function to switch Homebrew Python versions
+function switch_python
+    if test (count $argv) -eq 0
+        echo "Usage: switch_python 3.11|3.12|3.14 ..."
+        return 1
+    end
+
+    set pyver $argv[1] # <-- rename from 'version' to 'pyver'
+    set prefix "/opt/homebrew/opt/python@$pyver/bin"
+
+    if test -d $prefix
+        # Add version to PATH at the front
+        set -gx PATH $prefix $PATH
+
+        # Update symlink so `which python` works
+        ln -sf $prefix/python3 $HOME/.local/bin/python
+        echo "Switched python to $pyver"
+    else
+        echo "Python version $pyver not found via Homebrew"
+    end
+end
+funcsave switch_python
+
+# Optional auto-completion for switch_python
+function __switch_python_complete
+    for dir in /opt/homebrew/opt/python@*/bin
+        set version (string replace -r '.*/python@([0-9]+\.[0-9]+).*' '$1' $dir)
+        echo $version
+    end
+end
+complete -c switch_python -a "(__switch_python_complete)"
+
+ln -sf (which python3) $HOME/.local/bin/python
+
+# -------------------------------
 # Git abbreviations
 # -------------------------------
 abbr -ag ga git add
@@ -96,11 +143,9 @@ end
 
 bind \cv fish_edit_command
 
-
 # ======================================================================
 # Gpustat shortcut 
 # ======================================================================
-
 function gpustat
     set VENV_DIR "$HOME/workspace/gpu/.venv"
     set PYTHON "$VENV_DIR/bin/python"
@@ -114,11 +159,9 @@ function gpustat
     watch -n0.1 $PYTHON -m gpustat -a -p
 end
 
-
 # ======================================================================
 # VSCode launcher fix for tmux socket issue
 # ======================================================================
-
 function code
     # If in tmux and socket is broken, try to fix it
     if set -q TMUX; and set -q VSCODE_IPC_HOOK_CLI; and not test -S "$VSCODE_IPC_HOOK_CLI"
