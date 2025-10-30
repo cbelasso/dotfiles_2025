@@ -26,8 +26,9 @@ else if test $os = Linux
     set -gx HELIX_RUNTIME $HOME/.config/helix/runtime
     set -gx HELIX_CLIPBOARD_PROVIDER termcode
     fish_add_path $HOME/.local/bin
+    # Ensure miniconda bin is in PATH for Helix
+    # fish_add_path $HOME/miniconda3/bin
 end
-
 # -------------------------------
 # Miniconda
 # -------------------------------

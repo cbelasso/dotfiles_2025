@@ -18,8 +18,8 @@ args = ["--stdio"]
 # formatter = { command = "ruff", args = ["format", "-"] }
 # auto-format = true
 # auto-pairs = { '(' = ')', '{' = '}', '[' = ']', '"' = '"', "'" = "'" }
-# text-width = 88
-# rulers = [88]
+# text-width = 96
+# rulers = [96]
 
 [[language]]
 name = "python"
@@ -27,8 +27,8 @@ language-servers = ["pyright", "ruff"]
 formatter = { command = "sh", args = ["-c", "ruff check --fix --stdin-filename placeholder.py - | ruff format -"] }
 auto-format = true
 auto-pairs = { '(' = ')', '{' = '}', '[' = ']', '"' = '"', "'" = "'" }
-text-width = 88
-rulers = [88]
+text-width = 96
+rulers = [96]
 
 # ======================================
 # 📝 Markdown

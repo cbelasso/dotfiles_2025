@@ -1,5 +1,5 @@
 # ~/.config/ruff/ruff.toml
-line-length = 88
+line-length = 96
 target-version = "py312"
 
 [lint]
