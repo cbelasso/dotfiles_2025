@@ -80,8 +80,8 @@ set -g theme_hostname always
 # -------------------------------
 # Aliases
 # -------------------------------
-alias ls "eza --icons --grid --header"
-alias ll "eza --icons --long --header"
+alias ls "eza --icons --grid --header --git"
+alias ll "eza --icons --long --header --git"
 alias lt 'eza --tree --level=2 --long --icons --git --header --group --color=always'
 alias lg lazygit
 alias ipython ipython3
