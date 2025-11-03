@@ -146,14 +146,26 @@ abbr -ag gst git status
 # Edit command line in Helix
 # -------------------------------
 function fish_edit_command
-    set cmd (commandline -cp) # copy the current command line
-    set tmp (mktemp) # create a temporary file
-    echo $cmd >$tmp
-    hx $tmp # open in Helix
-    commandline (string trim (cat $tmp)) # replace command with edited contents
+    # Create a temp file with .sh extension
+    set tmp (mktemp --suffix=.sh)
+
+    # Capture the current command exactly
+    commandline -b >$tmp
+
+    # Open in Helix
+    hx $tmp
+
+    # Read back the edited command
+    set newcmd (cat $tmp)
+
+    # Replace command line
+    commandline --replace -- "$newcmd"
+
+    # Clean up
     rm $tmp
 end
 
+# Bind it to Ctrl+V
 bind \cv fish_edit_command
 
 # ======================================================================
@@ -187,3 +199,10 @@ function code
 
     command code $argv
 end
+
+# ======================================================================
+# HuggingFace / Transformers cache
+# ======================================================================
+export HF_DATASETS_CACHE="/data-fast/data3/common/huggingface_datasets"
+export HF_HOME="/data-fast/data3/common/huggingface_datasets"
+export TRANSFORMERS_CACHE="/data-fast/data3/common/huggingface_datasets"
