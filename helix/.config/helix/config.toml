@@ -40,7 +40,8 @@ A-k = "extend_line_up"
 A-a = "expand_selection"
 A-d = "jump_backward"
 A-f = "jump_forward"
-
+C-j = "@12zj"
+C-k = "@12zk"
 
 [keys.insert]
 j.k = "normal_mode"
