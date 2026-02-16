@@ -7,14 +7,17 @@ cursorline = true
 scrolloff = 10
 # clipboard-provider= "pasteboard"
 bufferline = "always"
-preview-completion-insert = false
+preview-completion-insert = true
 auto-info = true
 gutters = ["diff", "diagnostics", "line-numbers", "spacer"]
 color-modes = true
-end-of-line-diagnostics = "hint"
+# end-of-line-diagnostics = "hint"
+# soft-wrap = { enable = true }
 
 [editor.lsp]
-display-inlay-hints = true
+# display-inlay-hints = true
+enable = true
+snippets = true
 
 [editor.inline-diagnostics]
 cursor-line = "warning"

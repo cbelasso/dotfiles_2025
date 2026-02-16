@@ -54,6 +54,11 @@ if test -d $MINICONDA_DIR
 end
 
 # -------------------------------
+# Direnv
+# -------------------------------
+direnv hook fish | source
+
+# -------------------------------
 # Editor
 # -------------------------------
 set -gx EDITOR hx
@@ -81,8 +86,16 @@ set -g theme_hostname always
 # Aliases
 # -------------------------------
 alias ls "eza --icons --grid --header --git"
-alias ll "eza --icons --long --header --git"
+alias ll "eza --icons --long --header --git --group"
+alias la "eza --icons --grid --header --git --all"
+alias lla "eza --icons --long --header --git --group --all"
+
+# Tree variants
 alias lt 'eza --tree --level=2 --long --icons --git --header --group --color=always'
+alias lta 'eza --tree --level=2 --long --icons --git --header --group --all --color=always'
+alias lt3 'eza --tree --level=3 --long --icons --git --header --group --color=always'
+alias lt3a 'eza --tree --level=3 --long --icons --git --header --group --all --color=always'
+
 alias lg lazygit
 alias ipython ipython3
 
@@ -169,7 +182,7 @@ end
 bind \cv fish_edit_command
 
 # ======================================================================
-# Gpustat shortcut 
+# Gpustat shortcut
 # ======================================================================
 function gpustat
     set VENV_DIR "$HOME/workspace/gpu/.venv"
@@ -181,24 +194,40 @@ function gpustat
         return 1
     end
 
-    watch -n0.1 $PYTHON -m gpustat -a -p
+    # watch -n0.1 $PYTHON -m gpustat -a -p
+    watch -n0.1 $PYTHON -m gpustat -p
+
 end
 
 # ======================================================================
 # VSCode launcher fix for tmux socket issue
 # ======================================================================
 function code
-    # If in tmux and socket is broken, try to fix it
-    if set -q TMUX; and set -q VSCODE_IPC_HOOK_CLI; and not test -S "$VSCODE_IPC_HOOK_CLI"
-        set NEW_SOCKET (find /run/user/(id -u) -name "vscode-ipc-*.sock" -type s 2>/dev/null | head -1)
-        if test -n "$NEW_SOCKET"
-            tmux set-environment VSCODE_IPC_HOOK_CLI "$NEW_SOCKET"
-            set -gx VSCODE_IPC_HOOK_CLI "$NEW_SOCKET"
-        end
-    end
+    # In tmux, sync the environment variable
+    if set -q TMUX
+        # Get the variable from tmux environment
+        set TMUX_VSCODE_SOCKET (tmux show-environment VSCODE_IPC_HOOK_CLI 2>/dev/null | string split '=')[2]
 
-    command code $argv
+        # If tmux has the variable, use it
+        if test -n "$TMUX_VSCODE_SOCKET"
+            set -gx VSCODE_IPC_HOOK_CLI "$TMUX_VSCODE_SOCKET"
+        end
+
+        # Check if socket is valid
+        if set -q VSCODE_IPC_HOOK_CLI; and test -S "$VSCODE_IPC_HOOK_CLI"
+            command code $argv
+            return
+        end
+
+        echo "Error: VSCode socket not found. Start tmux from VSCode's integrated terminal."
+        return 1
+    else
+        command code $argv
+    end
 end
+
+# Homebrew in ~/.local/homebrew
+status --is-interactive; and eval (~/.local/homebrew/bin/brew shellenv)
 
 # ======================================================================
 # HuggingFace / Transformers cache

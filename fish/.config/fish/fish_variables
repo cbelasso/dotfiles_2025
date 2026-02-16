@@ -1,6 +1,6 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
-SETUVAR __fish_initialized:3800
+SETUVAR __fish_initialized:3400
 SETUVAR fish_color_autosuggestion:brblack
 SETUVAR fish_color_cancel:\x2dr
 SETUVAR fish_color_command:normal
@@ -37,4 +37,4 @@ SETUVAR fish_pager_color_selected_background:\x2dr
 SETUVAR fish_pager_color_selected_completion:\x1d
 SETUVAR fish_pager_color_selected_description:\x1d
 SETUVAR fish_pager_color_selected_prefix:\x1d
-SETUVAR fish_user_paths:/Users/clyde/\x2elocal/bin\x1e/Users/clyde/\x2elocal/share/nvim/mason/bin\x1e/opt/homebrew/bin
+SETUVAR fish_user_paths:/home/clyde/\x2elocal/bin\x1e/Users/clyde/\x2elocal/bin\x1e/Users/clyde/\x2elocal/share/nvim/mason/bin\x1e/opt/homebrew/bin
