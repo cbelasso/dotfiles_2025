@@ -228,33 +228,6 @@ function gpustat
 
 end
 
-# ======================================================================
-# VSCode launcher fix for tmux socket issue
-# ======================================================================
-function code
-    # In tmux, sync the environment variable
-    if set -q TMUX
-        # Get the variable from tmux environment
-        set TMUX_VSCODE_SOCKET (tmux show-environment VSCODE_IPC_HOOK_CLI 2>/dev/null | string split '=')[2]
-
-        # If tmux has the variable, use it
-        if test -n "$TMUX_VSCODE_SOCKET"
-            set -gx VSCODE_IPC_HOOK_CLI "$TMUX_VSCODE_SOCKET"
-        end
-
-        # Check if socket is valid
-        if set -q VSCODE_IPC_HOOK_CLI; and test -S "$VSCODE_IPC_HOOK_CLI"
-            command code $argv
-            return
-        end
-
-        echo "Error: VSCode socket not found. Start tmux from VSCode's integrated terminal."
-        return 1
-    else
-        command code $argv
-    end
-end
-
 # Homebrew in ~/.local/homebrew
 status --is-interactive; and eval (~/.local/homebrew/bin/brew shellenv)
 
