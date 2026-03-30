@@ -182,6 +182,35 @@ end
 bind \cv fish_edit_command
 
 # ======================================================================
+# Fzf directory search and cd
+# ======================================================================
+function fzf_cd
+    # Search files/dirs with Tab to toggle between local and system-wide
+    set -l tmpfile (mktemp)
+    echo "local" > $tmpfile
+
+    set -l selected (fd . 2>/dev/null | fzf \
+        --header 'Tab: toggle system-wide/local' \
+        --bind "tab:execute(echo \$([ \$(cat $tmpfile) = local ] && echo system-wide || echo local) > $tmpfile)+reload([ \$(cat $tmpfile) = local ] && fd . 2>/dev/null || fd . / 2>/dev/null)+clear-selection" \
+        --preview 'ls -la {}' \
+        --height 50%)
+
+    rm -f $tmpfile
+
+    if test -n "$selected"
+        if test -d "$selected"
+            cd "$selected"
+        else
+            cd (dirname "$selected")
+        end
+        commandline -f repaint
+    end
+end
+
+# Bind to Ctrl+F Ctrl+F (chord binding)
+bind \cf\cf fzf_cd
+
+# ======================================================================
 # Gpustat shortcut
 # ======================================================================
 function gpustat
@@ -232,6 +261,6 @@ status --is-interactive; and eval (~/.local/homebrew/bin/brew shellenv)
 # ======================================================================
 # HuggingFace / Transformers cache
 # ======================================================================
-export HF_DATASETS_CACHE="/data-fast/data3/common/huggingface_datasets"
-export HF_HOME="/data-fast/data3/common/huggingface_datasets"
-export TRANSFORMERS_CACHE="/data-fast/data3/common/huggingface_datasets"
+export HF_DATASETS_CACHE="/Users/clyde/workspace/huggingface_datasets"
+export HF_HOME="/Users/clyde/workspace/huggingface_datasets"
+export TRANSFORMERS_CACHE="/Users/clyde/workspace/huggingface_datasets"
