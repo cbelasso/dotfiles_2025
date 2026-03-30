@@ -228,9 +228,6 @@ function gpustat
 
 end
 
-# Homebrew in ~/.local/homebrew
-status --is-interactive; and eval (~/.local/homebrew/bin/brew shellenv)
-
 # ======================================================================
 # HuggingFace / Transformers cache
 # ======================================================================
