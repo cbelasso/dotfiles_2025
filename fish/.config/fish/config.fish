@@ -159,20 +159,17 @@ abbr -ag gst git status
 # Edit command line in Helix
 # -------------------------------
 function fish_edit_command
-    # Create a temp file with .sh extension
-    set tmp (mktemp --suffix=.sh)
+    # Create a temp file
+    set tmp (mktemp)
 
     # Capture the current command exactly
-    commandline -b >$tmp
+    commandline -b > $tmp
 
     # Open in Helix
     hx $tmp
 
-    # Read back the edited command
-    set newcmd (cat $tmp)
-
-    # Replace command line
-    commandline --replace -- "$newcmd"
+    # Replace command line directly from file
+    commandline --replace -- (string trim -r < $tmp)
 
     # Clean up
     rm $tmp
