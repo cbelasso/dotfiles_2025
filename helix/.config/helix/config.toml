@@ -45,6 +45,7 @@ A-d = "jump_backward"
 A-f = "jump_forward"
 C-j = "@12zj"
 C-k = "@12zk"
+C-e = [":insert-output echo $(realpath %{buffer_name})", ":clipboard-yank", "delete_selection"]
 
 [keys.insert]
 j.k = "normal_mode"
